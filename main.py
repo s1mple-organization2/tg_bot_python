@@ -3,8 +3,13 @@ import requests
 import jsonpickle
 from telebot import types
 from telebot import custom_filters
+from API import app
 
-token = "5023550366:AAHHIsAIbrwI6S6ermjbeuZbvoa6Ye5qGwo"
+
+app.run(debug=True, host='0.0.0.0', port=5000)
+
+token = "2112527536:AAFRbCPTwipogbBa-uaE3CxjTP2nH7kUU6s"
+# token = "5023550366:AAHHIsAIbrwI6S6ermjbeuZbvoa6Ye5qGwo"
 bot = telebot.TeleBot(token)
 
 
@@ -13,12 +18,14 @@ def get_token(login, psw):
         'telephone_number': login,
         'password': psw,
     }
-    post = requests.post('https://api.snaptrap.online/api/user/login', json=data)
+    post = requests.post(
+        'https://api.snaptrap.online/api/user/login', json=data)
     token_tmp = jsonpickle.decode(post.text)['token']
     auth = {
         'Authorization': 'Bearer ' + token_tmp,
     }
-    session = requests.get('https://api.snaptrap.online/api/user/auth', headers=auth)
+    session = requests.get(
+        'https://api.snaptrap.online/api/user/auth', headers=auth)
     token = jsonpickle.decode(session.text)['token']
     return token
 
@@ -88,7 +95,8 @@ def ready_for_answer(message):
 # incorrect number
 @bot.message_handler(state=Product.price, is_digit=False)
 def age_incorrect(message):
-    bot.send_message(message.chat.id, 'Looks like you are submitting a string in the field age. Please enter a number')
+    bot.send_message(
+        message.chat.id, 'Looks like you are submitting a string in the field age. Please enter a number')
 
 
 @bot.message_handler(commands=['start'])
@@ -96,14 +104,15 @@ def start_message(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("Registration")
     markup.add(item1)
-    bot.send_message(message.chat.id, "Welcome" + message.from_user.first_name, reply_markup=markup)
+    bot.send_message(message.chat.id, "Welcome" +
+                     message.from_user.first_name, reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
 def button_message(message):
     if message.text == "Registration":
-        bot.send_message(message.from_user.id, 'https://snaptrap.online?tgID=' + str(message.chat.id))
-
+        bot.send_message(message.from_user.id,
+                         'https://snaptrap.online?tgID=' + str(message.chat.id))
 
 
 # register filters
