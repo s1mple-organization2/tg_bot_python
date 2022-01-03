@@ -1,6 +1,7 @@
 import telebot
 import requests
 import jsonpickle
+import config
 from telebot import types
 from telebot import custom_filters
 from API import app
@@ -8,9 +9,7 @@ from API import app
 
 app.run(debug=True, host='0.0.0.0', port=5000)
 
-token = "2112527536:AAFRbCPTwipogbBa-uaE3CxjTP2nH7kUU6s"
-# token = "5023550366:AAHHIsAIbrwI6S6ermjbeuZbvoa6Ye5qGwo"
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(config.TOKEN)
 
 
 def get_token(login, psw):
