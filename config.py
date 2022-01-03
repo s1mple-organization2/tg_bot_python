@@ -1,1 +1,1 @@
-TOKEN = "token_tg_bot"
+TOKEN = "5023550366:AAHHIsAIbrwI6S6ermjbeuZbvoa6Ye5qGwo"

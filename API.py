@@ -26,12 +26,23 @@ def send():
     return "<p> Message from " + chat_id + " sent</p>"
 
 
-@app.route('/api/order', methods=['POST'])
+@app.route('/order', methods=['POST'])
 def get_Order_Data():
     request_data = request.get_json()
-    # id = request_data['id']
-    print(request_data)
-    return request_data
+    user_id = request_data['user_ID']
+    manager_id = request_data['manager_Telegramm_ID']
+    product_list = request_data['product_list']
+    total_price_all_order = 0
+    list_products = ''
+    for i in product_list:
+        if i['product_name'] == '':
+            break
+        else:
+            list_products += i['product_name'] + ' (' + str(i['quantity']) + ')\n'
+            total_price_all_order += i['total_price']
+    full_text_msg = 'Your order:\n' + list_products + 'Total price: ' + str(total_price_all_order) + '$'
+    send_message(user_id, full_text_msg)
+    return 'all ok', 200
 
 # if __name__ == '__main__':
 #     app.run(debug=True, host='0.0.0.0', port=5000)
