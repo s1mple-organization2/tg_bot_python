@@ -6,7 +6,6 @@ from telebot import types
 from telebot import custom_filters
 from API import app
 
-
 app.run(debug=True, host='0.0.0.0', port=5000)
 
 bot = telebot.TeleBot(config.TOKEN)
@@ -66,7 +65,7 @@ def name_get(message):
     """
     State 1. Will process when user's state is 1.
     """
-    bot.send_message(message.chat.id, f'Price')
+    bot.send_message(message.chat.id, 'Price')
     bot.set_state(message.from_user.id, Product.price)
     with bot.retrieve_data(message.from_user.id) as data:
         data['name'] = message.text
