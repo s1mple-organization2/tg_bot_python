@@ -1,15 +1,11 @@
 import requests
 import jsonpickle
-import config
-from telebot import types
-from telebot import custom_filters
 import telebot
-from API import app
+from telebot import types, custom_filters
 
-app.run(debug=True, host='0.0.0.0', port=5000)
+import config
 
 bot = telebot.TeleBot(config.TOKEN)
-
 
 def get_token(login, psw):
     data = {
