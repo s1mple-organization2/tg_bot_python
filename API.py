@@ -26,7 +26,7 @@ def send():
     return "<p> Message from " + chat_id + " sent</p>"
 
 
-@app.route('/order', methods=['POST'])
+@app.route('/api/order', methods=['POST'])
 def get_Order_Data():
     request_data = request.get_json()
     user_id = request_data['user_ID']
