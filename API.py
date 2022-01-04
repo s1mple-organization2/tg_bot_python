@@ -32,6 +32,7 @@ def get_Order_Data():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
         request_data = json.loads(request.get_data())
+        print(request_data)
         user_id = request_data['user_ID']
         manager_id = request_data['manager_Telegramm_ID']
         product_list = request_data['product_list']
