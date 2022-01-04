@@ -1,5 +1,6 @@
 import requests
 import config
+import json
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -28,21 +29,26 @@ def send():
 
 @app.route('/api/order', methods=['POST'])
 def get_Order_Data():
-    request_data = request.get_json()
-    user_id = request_data['user_ID']
-    manager_id = request_data['manager_Telegramm_ID']
-    product_list = request_data['product_list']
-    total_price_all_order = 0
-    list_products = ''
-    for i in product_list:
-        if i['product_name'] == '':
-            break
-        else:
-            list_products += i['product_name'] + ' (' + str(i['quantity']) + ')\n'
-            total_price_all_order += i['total_price']
-    full_text_msg = 'Your order:\n' + list_products + 'Total price: ' + str(total_price_all_order) + '$'
-    send_message(user_id, full_text_msg)
-    return 'all ok', 200
+    content_type = request.headers.get('Content-Type')
+    if (content_type == 'application/json'):
+        request_data = json.loads(request.get_data())
+        user_id = request_data['user_ID']
+        manager_id = request_data['manager_Telegramm_ID']
+        product_list = request_data['product_list']
+        total_price_all_order = 0
+        list_products = ''
+        for i in product_list:
+            if i['product_name'] == '':
+                break
+            else:
+                list_products += i['product_name'] + ' (' + str(i['quantity']) + ')\n'
+                total_price_all_order += i['total_price']
+        full_text_msg = 'Your order:\n' + list_products + 'Total price: ' + str(total_price_all_order) + '$'
+        send_message(user_id, full_text_msg)
+        return 'ok'
+    else:
+        return 'Content-Type not supported!'
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
