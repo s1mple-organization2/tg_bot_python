@@ -32,7 +32,8 @@ def get_Order_Data():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
         request_data = json.loads(request.get_data())
-        print(request_data)
+        # print(request_data)
+        order_id = request_data['id']
         user_id = request_data['user_ID']
         manager_id = request_data['manager_Telegramm_ID']
         product_list = request_data['product_list']
@@ -46,6 +47,8 @@ def get_Order_Data():
                 total_price_all_order += i['total_price']
         full_text_msg = 'Your order:\n' + list_products + 'Total price: ' + str(total_price_all_order) + '$'
         send_message(user_id, full_text_msg)
+        duty_message = str(order_id) + ':' + str(user_id) + ':' + str(manager_id) + ':' + list_products + ':' + str(total_price_all_order) + ':'
+        send_message(config.CHAT_ID_USERBOT, duty_message)
         return 'ok'
     else:
         return 'Content-Type not supported!'
