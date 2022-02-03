@@ -36,7 +36,7 @@ def get_product_info():
         price = request_data['productPrice']
         user_id = request_data['userID']
         manager_id = request_data['managerID']
-        msg = str(product_name) + ':' + str(price) + ':' + str(user_id) + ':' + str(manager_id)
+        msg = 'chat:'+str(product_name) + ':' + str(price) + ':' + str(user_id) + ':' + str(manager_id)
         send_message(config.CHAT_ID_USERBOT, msg)
         return 'ok'
 
