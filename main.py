@@ -80,7 +80,7 @@ def ready_for_answer(message):
             'type': Product.type,
         }
         post = requests.post('https://api.snaptrap.online/api/goods/', data=data_post, files=Product.files, headers={
-            'Authorization': 'Bearer ' + get_token('375298727771', 'TempPa$$3Day'),
+            'Authorization': 'Bearer ' + get_token('375298727771', 'user1234'),
         })
         bot.send_message(message.chat.id, 'Product added')
     bot.delete_state(message.from_user.id)
